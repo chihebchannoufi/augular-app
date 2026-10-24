@@ -1,1 +1,83 @@
-<p>create-club works!</p>
+<section class="container mt-4">
+  <h2>Create Club</h2>
+
+  @if (errorMessage) {
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+  }
+
+  @if (successMessage) {
+    <div class="alert alert-success" role="status">
+      {{ successMessage }}
+    </div>
+  }
+
+  <form #clubForm="ngForm" (ngSubmit)="submit(clubForm)">
+    <div class="mb-3">
+      <label for="name" class="form-label">Club name</label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        class="form-control"
+        [(ngModel)]="formModel.name"
+        #name="ngModel"
+        required
+        maxlength="30"
+      />
+
+      @if (name.invalid && name.touched) {
+        <div class="text-danger mt-1">
+          Club name is required and must not exceed 30 characters.
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        id="description"
+        name="description"
+        class="form-control"
+        rows="4"
+        [(ngModel)]="formModel.description"
+        #description="ngModel"
+        required
+        minlength="3"
+        maxlength="1000"
+      ></textarea>
+
+      @if (description.invalid && description.touched) {
+        <div class="text-danger mt-1">
+          Description must contain between 3 and 1000 characters.
+        </div>
+      }
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="isSubmitting"
+    >
+      @if (isSubmitting) {
+        <span
+          class="spinner-border spinner-border-sm me-2"
+          aria-hidden="true"
+        ></span>
+        Creating...
+      } @else {
+        Create Club
+      }
+    </button>
+
+    <button
+      type="button"
+      class="btn btn-secondary ms-2"
+      (click)="router.navigate(['/clubs'])"
+      [disabled]="isSubmitting"
+    >
+      Cancel
+    </button>
+  </form>
+</section>

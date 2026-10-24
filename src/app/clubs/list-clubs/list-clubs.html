@@ -16,6 +16,7 @@
         <th scope="col">Description</th>
         <th scope="col">Created</th>
         <th scope="col">Updated</th>
+        <th scope="col"> Action</th>
       </tr>
       </thead>
       <tbody>
@@ -26,6 +27,24 @@
             <td>{{ club.description }}</td>
             <td>{{ club.createDate }}</td>
             <td>{{ club.updateDate }}</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-danger btn-sm"
+                (click)="deleteClub(club)"
+                [disabled]="deletingClubId() === club.id"
+              >
+                @if (deletingClubId() === club.id) {
+                  <span
+                    class="spinner-border spinner-border-sm me-1"
+                    aria-hidden="true"
+                  ></span>
+                  Deleting...
+                } @else {
+                  Delete
+                }
+              </button>
+            </td>
           </tr>
         }
       </tbody>
